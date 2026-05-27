@@ -28,7 +28,7 @@ fi
 
 # ── Common: Python deps ──────────────────────────────────────────
 echo ""
-echo "[1/5] Installing Python dependencies..."
+echo "[1/6] Installing Python dependencies..."
 if [ "$IS_ROBOT" == "true" ]; then
     pip3 install faster-whisper sounddevice soundfile tqdm filelock openwakeword
     sudo apt-get install -y sox portaudio19-dev
@@ -39,7 +39,7 @@ fi
 
 # ── Piper voice model (both machines) ───────────────────────────
 echo ""
-echo "[2/5] Downloading Piper voice model..."
+echo "[2/6] Downloading Piper voice model..."
 mkdir -p ~/.local/share/piper
 cd ~/.local/share/piper
 wget -q --show-progress \
@@ -48,10 +48,16 @@ wget -q --show-progress \
     https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json
 cd -
 
+# ── faster-whisper base model (both machines) ────────────────────
+echo ""
+echo "[3/6] Downloading faster-whisper base model..."
+python3 -c "from faster_whisper import WhisperModel; WhisperModel('base', device='cpu', compute_type='int8')"
+echo "faster-whisper base model cached."
+
 # ── Piper binary (Jetson only) ───────────────────────────────────
 if [ "$IS_ROBOT" == "true" ]; then
     echo ""
-    echo "[3/5] Installing Piper standalone binary (aarch64)..."
+    echo "[4/6] Installing Piper standalone binary (aarch64)..."
     wget -q --show-progress \
         https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_linux_aarch64.tar.gz
     tar -xzf piper_linux_aarch64.tar.gz
@@ -60,12 +66,12 @@ if [ "$IS_ROBOT" == "true" ]; then
     echo "Piper binary installed at /usr/local/bin/piper"
 else
     echo ""
-    echo "[3/5] Skipping Piper binary (dev machine uses piper-tts Python package)"
+    echo "[4/5] Skipping Piper binary (dev machine uses piper-tts Python package)"
 fi
 
 # ── Ollama + LLaMA 3.2 ──────────────────────────────────────────
 echo ""
-echo "[4/5] Installing Ollama and pulling LLaMA 3.2 3B..."
+echo "[5/6] Installing Ollama and pulling LLaMA 3.2 3B..."
 if ! command -v ollama &> /dev/null; then
     curl -fsSL https://ollama.com/install.sh | sh
 fi
@@ -73,7 +79,7 @@ ollama pull llama3.2
 
 # ── Build workspace ──────────────────────────────────────────────
 echo ""
-echo "[5/5] Building ROS2 workspace..."
+echo "[6/6] Building ROS2 workspace..."
 source /opt/ros/$ROS_DISTRO/setup.bash
 
 # Apply Foxy CMakeLists patch for bob_llm
@@ -100,35 +106,35 @@ fi
 colcon build --symlink-install
 source install/setup.bash
 
-# ── Systemd service (Jetson only) ───────────────────────────────
+# ── Systemd service ───────────────────────────────
 if [ "$IS_ROBOT" == "true" ]; then
     echo ""
-    read -p "Install systemd service (auto-start at boot)? [y/N]: " INSTALL_SERVICE
+    read -p "Install systemd services (auto-start at boot)? [y/N]: " INSTALL_SERVICE
     if [ "$INSTALL_SERVICE" == "y" ] || [ "$INSTALL_SERVICE" == "Y" ]; then
+        # Ollama — installed by install script, just enable
+        sudo systemctl enable ollama.service
+        sudo systemctl start ollama.service
+        echo "Ollama service enabled."
+
+        # unitree_converse
         sudo cp unitree_converse.service /etc/systemd/system/
         sudo systemctl daemon-reload
         sudo systemctl enable unitree_converse.service
         sudo systemctl start unitree_converse.service
-        echo "Service installed and started."
+        echo "unitree_converse service enabled."
     fi
-fi
-
-echo ""
-echo "========================================"
-echo "   Setup complete!"
-echo "========================================"
-if [ "$IS_ROBOT" == "true" ]; then
-    echo ""
-    echo "To launch manually (stop service first):"
-    echo "  sudo systemctl stop unitree_converse.service"
-    echo "  source /opt/ros/foxy/setup.bash"
-    echo "  source ~/cyclonedds_ws/install/setup.bash"
-    echo "  source install/setup.bash"
-    echo "  ros2 launch g1_voice voice_real.launch.py"
 else
     echo ""
-    echo "To launch on dev machine:"
-    echo "  source /opt/ros/humble/setup.bash"
-    echo "  source install/setup.bash"
-    echo "  ros2 launch g1_voice voice_sim.launch.py"
+    echo "[6/6] Starting Ollama on dev machine..."
+    # On dev machine just start Ollama — no systemd service needed
+    if systemctl is-active --quiet ollama 2>/dev/null; then
+        echo "Ollama already running."
+    else
+        # Start manually in background if not a service
+        nohup ollama serve > /tmp/ollama.log 2>&1 &
+        sleep 2
+        echo "Ollama started in background (log: /tmp/ollama.log)"
+        echo "To start automatically at login, add to ~/.bashrc:"
+        echo "  nohup ollama serve > /tmp/ollama.log 2>&1 &"
+    fi
 fi
