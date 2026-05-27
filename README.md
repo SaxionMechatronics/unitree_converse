@@ -35,7 +35,7 @@ The setup script will ask whether you are setting up on the **Unitree G1 Jetson*
 
 ## Architecture
 
-![unitree_converse architecture](architecture.svg)
+![unitree_converse architecture](unitree_converse_architecture.svg)
 
 ---
 
