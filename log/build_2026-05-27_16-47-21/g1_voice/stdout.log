@@ -1,0 +1,27 @@
+running egg_info
+writing ../../build/g1_voice/g1_voice.egg-info/PKG-INFO
+writing dependency_links to ../../build/g1_voice/g1_voice.egg-info/dependency_links.txt
+writing entry points to ../../build/g1_voice/g1_voice.egg-info/entry_points.txt
+writing requirements to ../../build/g1_voice/g1_voice.egg-info/requires.txt
+writing top-level names to ../../build/g1_voice/g1_voice.egg-info/top_level.txt
+reading manifest file '../../build/g1_voice/g1_voice.egg-info/SOURCES.txt'
+writing manifest file '../../build/g1_voice/g1_voice.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+byte-compiling /home/unitree/unitree_converse/install/g1_voice/lib/python3.8/site-packages/g1_voice/stt_node_v1.py to stt_node_v1.cpython-38.pyc
+running install_data
+copying config/voice_params_real.yaml -> /home/unitree/unitree_converse/install/g1_voice/share/g1_voice/config
+running install_egg_info
+removing '/home/unitree/unitree_converse/install/g1_voice/lib/python3.8/site-packages/g1_voice-0.0.0-py3.8.egg-info' (and everything under it)
+Copying ../../build/g1_voice/g1_voice.egg-info to /home/unitree/unitree_converse/install/g1_voice/lib/python3.8/site-packages/g1_voice-0.0.0-py3.8.egg-info
+running install_scripts
+Installing action_dispatcher_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+Installing button_trigger_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+Installing robot_state_mock_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+Installing robot_state_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+Installing stt_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+Installing tts_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+Installing wake_word_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+writing list of installed files to '/home/unitree/unitree_converse/build/g1_voice/install.log'

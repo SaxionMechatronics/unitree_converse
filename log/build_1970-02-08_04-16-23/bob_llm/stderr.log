@@ -1,0 +1,8 @@
+CMake Error at /opt/ros/foxy/share/ament_cmake_python/cmake/ament_python_install_package.cmake:34 (message):
+  ament_python_install_package() called with unused arguments:
+  SETUP_CFG;bob_llm/setup.cfg;SCRIPTS_DESTINATION;lib/bob_llm
+Call Stack (most recent call first):
+  /opt/ros/foxy/share/ament_cmake_python/cmake/ament_python_install_package.cmake:28 (_ament_cmake_python_install_package)
+  CMakeLists.txt:15 (ament_python_install_package)
+
+

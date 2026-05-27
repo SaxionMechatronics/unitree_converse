@@ -1,0 +1,11 @@
+source;share/bob_llm/hook/cmake_prefix_path.ps1
+source;share/bob_llm/hook/cmake_prefix_path.dsv
+source;share/bob_llm/hook/cmake_prefix_path.sh
+source;share/bob_llm/hook/pythonpath.ps1
+source;share/bob_llm/hook/pythonpath.dsv
+source;share/bob_llm/hook/pythonpath.sh
+source;share/bob_llm/local_setup.bash
+source;share/bob_llm/local_setup.dsv
+source;share/bob_llm/local_setup.ps1
+source;share/bob_llm/local_setup.sh
+source;share/bob_llm/local_setup.zsh

@@ -1,0 +1,9 @@
+[console_scripts]
+action_dispatcher_node = g1_voice.action_dispatcher_node:main
+button_trigger_node = g1_voice.button_trigger_node:main
+robot_state_mock_node = g1_voice.robot_state_mock_node:main
+robot_state_node = g1_voice.robot_state_node:main
+stt_node = g1_voice.stt_node:main
+tts_node = g1_voice.tts_node:main
+wake_word_node = g1_voice.wake_word_node:main
+

@@ -1,0 +1,23 @@
+[1.195s] Invoking command in '/home/unitree/unitree_converse/build/g1_voice': AMENT_PREFIX_PATH=/home/unitree/unitree_converse/install/bob_llm:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/unitree/unitree_converse/install/bob_llm:${CMAKE_PREFIX_PATH} PYTHONPATH=/home/unitree/unitree_converse/build/g1_voice/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/unitree/unitree_converse/install/g1_voice/lib/python3.8/site-packages:/home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py develop --editable --build-directory /home/unitree/unitree_converse/build/g1_voice/build --no-deps symlink_data
+[1.656s] running develop
+[1.930s] running egg_info
+[1.930s] writing g1_voice.egg-info/PKG-INFO
+[1.931s] writing dependency_links to g1_voice.egg-info/dependency_links.txt
+[1.931s] writing entry points to g1_voice.egg-info/entry_points.txt
+[1.931s] writing requirements to g1_voice.egg-info/requires.txt
+[1.932s] writing top-level names to g1_voice.egg-info/top_level.txt
+[1.989s] reading manifest file 'g1_voice.egg-info/SOURCES.txt'
+[1.991s] writing manifest file 'g1_voice.egg-info/SOURCES.txt'
+[2.059s] running build_ext
+[2.060s] Creating /home/unitree/unitree_converse/install/g1_voice/lib/python3.8/site-packages/g1-voice.egg-link (link to .)
+[2.062s] Installing action_dispatcher_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+[2.062s] Installing button_trigger_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+[2.062s] Installing robot_state_mock_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+[2.063s] Installing robot_state_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+[2.063s] Installing stt_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+[2.063s] Installing tts_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+[2.063s] Installing wake_word_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+[2.064s] 
+[2.064s] Installed /home/unitree/unitree_converse/build/g1_voice
+[2.064s] running symlink_data
+[2.145s] Invoked command in '/home/unitree/unitree_converse/build/g1_voice' returned '0': AMENT_PREFIX_PATH=/home/unitree/unitree_converse/install/bob_llm:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/unitree/unitree_converse/install/bob_llm:${CMAKE_PREFIX_PATH} PYTHONPATH=/home/unitree/unitree_converse/build/g1_voice/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/unitree/unitree_converse/install/g1_voice/lib/python3.8/site-packages:/home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py develop --editable --build-directory /home/unitree/unitree_converse/build/g1_voice/build --no-deps symlink_data

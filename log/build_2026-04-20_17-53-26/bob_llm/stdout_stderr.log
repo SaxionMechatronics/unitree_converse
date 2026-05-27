@@ -1,0 +1,36 @@
+-- Install configuration: ""
+-- Execute custom install script
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/node_params.yaml
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/qdrant_tools.py
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/ros_cli_tools.py
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/skill_tools.py
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/skills/memory/SKILL.md
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/skills/memory/data/memory.json
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/skills/memory/scripts/save.py
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/skills/memory/scripts/search.py
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/environment/pythonpath.sh
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/environment/pythonpath.dsv
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm/__init__.py
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm/backend_clients.py
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm/chat_node.py
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm/llm_node.py
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm/setup.cfg
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm/tool_utils.py
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/bob_llm/llm_node.py
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/bob_llm/chat_node.py
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/ament_index/resource_index/package_run_dependencies/bob_llm
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/ament_index/resource_index/parent_prefix_path/bob_llm
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/environment/path.sh
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/environment/path.dsv
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/local_setup.bash
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/local_setup.sh
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/local_setup.zsh
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/local_setup.dsv
+-- Symlinking: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/package.dsv
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/ament_index/resource_index/packages/bob_llm
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/cmake/bob_llmConfig.cmake
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/cmake/bob_llmConfig-version.cmake
+-- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/package.xml
+Listing '/home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm'...

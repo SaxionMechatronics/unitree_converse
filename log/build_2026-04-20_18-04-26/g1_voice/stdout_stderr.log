@@ -1,0 +1,20 @@
+running develop
+running egg_info
+writing g1_voice.egg-info/PKG-INFO
+writing dependency_links to g1_voice.egg-info/dependency_links.txt
+writing entry points to g1_voice.egg-info/entry_points.txt
+writing requirements to g1_voice.egg-info/requires.txt
+writing top-level names to g1_voice.egg-info/top_level.txt
+reading manifest file 'g1_voice.egg-info/SOURCES.txt'
+writing manifest file 'g1_voice.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/unitree/unitree_converse/install/g1_voice/lib/python3.8/site-packages/g1-voice.egg-link (link to .)
+Installing action_dispatcher_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+Installing button_trigger_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+Installing robot_state_mock_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+Installing stt_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+Installing tts_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+Installing wake_word_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+
+Installed /home/unitree/unitree_converse/build/g1_voice
+running symlink_data

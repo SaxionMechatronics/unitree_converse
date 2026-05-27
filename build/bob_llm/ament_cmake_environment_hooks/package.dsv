@@ -1,0 +1,4 @@
+source;share/bob_llm/local_setup.bash
+source;share/bob_llm/local_setup.dsv
+source;share/bob_llm/local_setup.sh
+source;share/bob_llm/local_setup.zsh

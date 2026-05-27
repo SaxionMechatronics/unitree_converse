@@ -1,0 +1,21 @@
+[1.135s] Invoking command in '/home/unitree/unitree_converse/build/g1_voice': PYTHONPATH=/home/unitree/unitree_converse/build/g1_voice/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/unitree/unitree_converse/install/g1_voice/lib/python3.8/site-packages:/home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages:/home/unitree/unitree_converse/build/g1_voice:/home/unitree/unitree_converse/install/g1_voice/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py develop --editable --build-directory /home/unitree/unitree_converse/build/g1_voice/build --no-deps symlink_data
+[1.510s] running develop
+[1.734s] running egg_info
+[1.734s] writing g1_voice.egg-info/PKG-INFO
+[1.735s] writing dependency_links to g1_voice.egg-info/dependency_links.txt
+[1.735s] writing entry points to g1_voice.egg-info/entry_points.txt
+[1.735s] writing requirements to g1_voice.egg-info/requires.txt
+[1.735s] writing top-level names to g1_voice.egg-info/top_level.txt
+[1.780s] reading manifest file 'g1_voice.egg-info/SOURCES.txt'
+[1.781s] writing manifest file 'g1_voice.egg-info/SOURCES.txt'
+[1.836s] running build_ext
+[1.837s] Creating /home/unitree/unitree_converse/install/g1_voice/lib/python3.8/site-packages/g1-voice.egg-link (link to .)
+[1.838s] Installing action_dispatcher_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+[1.839s] Installing robot_state_mock_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+[1.839s] Installing stt_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+[1.839s] Installing tts_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+[1.840s] Installing wake_word_node script to /home/unitree/unitree_converse/install/g1_voice/lib/g1_voice
+[1.840s] 
+[1.840s] Installed /home/unitree/unitree_converse/build/g1_voice
+[1.840s] running symlink_data
+[1.909s] Invoked command in '/home/unitree/unitree_converse/build/g1_voice' returned '0': PYTHONPATH=/home/unitree/unitree_converse/build/g1_voice/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/unitree/unitree_converse/install/g1_voice/lib/python3.8/site-packages:/home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages:/home/unitree/unitree_converse/build/g1_voice:/home/unitree/unitree_converse/install/g1_voice/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py develop --editable --build-directory /home/unitree/unitree_converse/build/g1_voice/build --no-deps symlink_data

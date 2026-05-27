@@ -1,0 +1,39 @@
+/**:
+  ros__parameters:
+
+    # --- bob_llm (LLM Node) ---
+    api_url: "http://localhost:11434/v1"      # Ollama OpenAI-compatible endpoint
+    api_key: "no_key"
+    api_model: "llama3.2"
+    system_prompt: "You are Aletta, a friendly humanoid robot by Unitree Robotics. Currently you are being researched and worked upon by the SMART Research Group at Saxion University of Applied Sciences at Enschede, The Netherlands. Keep ALL responses under 2 sentences. You are speaking out loud, be concise."
+    temperature: 0.7
+    max_history_length: 10
+    stream: false                             # keep false for TTS compatibility
+
+    # --- STT Node ---
+    stt_node:
+      model_size: "base"
+      language: "en"
+      device: "cpu"
+      sample_rate: 16000
+      recording_duration: 5.0
+      silence_threshold: 0.01
+      silence_duration: 1.5
+
+    # --- Wake Word Node ---
+    wake_word_node:
+      wake_word_model: "hey_aletta"
+      detection_threshold: 0.5
+      sample_rate: 16000
+      chunk_duration: 0.08
+      use_wake_word: true
+      use_select_button: true
+      select_key: "s"
+
+    # --- TTS Node ---
+    tts_node:
+      voice_model_path: "/home/asmn/.local/share/piper/en_US-lessac-medium.onnx"
+      use_cuda: true
+      output_device: 5
+      output_sample_rate: 44100
+      tts_mode: "python"

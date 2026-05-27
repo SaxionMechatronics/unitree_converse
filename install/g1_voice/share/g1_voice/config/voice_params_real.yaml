@@ -1,0 +1,44 @@
+/llm_node:
+  ros__parameters:
+    api_url: "http://localhost:11434/v1"
+    api_key: "no_key"
+    api_model: "llama3.2"
+    system_prompt: "You are Aletta, a friendly humanoid robot by Unitree Robotics. Currently you are being researched and worked upon by the SMART Research Group at Saxion University of Applied Sciences in Enschede, Netherlands. You have access to your live robot state in [ROBOT STATE] blocks. Use this to answer questions about your battery, orientation, network, and software. Keep ALL responses under 2 sentences. You are speaking out loud, be concise."
+    temperature: 0.7
+    max_history_length: 10
+    stream: false
+
+/stt_node:
+  ros__parameters:
+    use_udp_mic: true
+    continuous_mode: false
+    udp_multicast_group: "239.168.123.161"
+    udp_port: 5555
+    udp_local_ip: "192.168.123.164"
+    model_size: "base"
+    language: "en"
+    device: "cpu"
+    sample_rate: 16000
+    recording_duration: 8.0
+    silence_threshold: 0.008
+    silence_duration: 2.0
+
+/wake_word_node:
+  ros__parameters:
+    wake_word_model: "hey_jarvis"
+    detection_threshold: 0.5
+    sample_rate: 16000
+    chunk_duration: 0.08
+    use_wake_word: false
+    use_select_button: false
+    select_key: "s"
+
+/tts_node:
+  ros__parameters:
+    voice_model_path: "/home/unitree/.local/share/piper/en_US-lessac-medium.onnx"
+    continuous_mode: false
+    use_cuda: false
+    output_device: 25
+    output_sample_rate: 44100
+    tts_mode: "binary"
+    piper_binary: "/usr/local/bin/piper"

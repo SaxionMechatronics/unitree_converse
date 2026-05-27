@@ -1,0 +1,6 @@
+source;share/g1_voice/hook/pythonpath.ps1
+source;share/g1_voice/hook/pythonpath.dsv
+source;share/g1_voice/hook/pythonpath.sh
+source;share/g1_voice/hook/ament_prefix_path.ps1
+source;share/g1_voice/hook/ament_prefix_path.dsv
+source;share/g1_voice/hook/ament_prefix_path.sh

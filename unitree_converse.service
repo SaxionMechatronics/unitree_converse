@@ -1,0 +1,21 @@
+[Unit]
+Description=Unitree G1 Voice Conversation Pipeline
+After=network.target ollama.service
+Requires=ollama.service
+
+[Service]
+Type=simple
+User=unitree
+WorkingDirectory=/home/unitree/unitree_converse
+Environment="HOME=/home/unitree"
+Environment="ROS_DOMAIN_ID=0"
+Environment="RMW_IMPLEMENTATION=rmw_cyclonedds_cpp"
+Environment="CYCLONEDDS_URI=/home/unitree/cyclonedds_ws/cyclonedds.xml"
+Environment="LD_LIBRARY_PATH=/usr/local/lib"
+Environment="AMENT_PREFIX_PATH=/home/unitree/unitree_ros2/cyclonedds_ws/install:/home/unitree/unitree_converse/install/g1_voice:/home/unitree/unitree_converse/install/bob_llm"
+ExecStart=/bin/bash -c 'source /opt/ros/foxy/setup.bash && source /home/unitree/cyclonedds_ws/install/setup.bash && source /home/unitree/unitree_ros2/cyclonedds_ws/install/setup.bash && source /home/unitree/unitree_converse/install/setup.bash && ros2 launch g1_voice voice_real.launch.py'
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

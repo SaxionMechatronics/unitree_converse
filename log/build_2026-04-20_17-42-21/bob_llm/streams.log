@@ -1,0 +1,40 @@
+[0.027s] Invoking command in '/home/unitree/unitree_converse/build/bob_llm': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/unitree/unitree_converse/build/bob_llm -- -j8 -l8
+[0.107s] Invoked command in '/home/unitree/unitree_converse/build/bob_llm' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/unitree/unitree_converse/build/bob_llm -- -j8 -l8
+[0.176s] Invoking command in '/home/unitree/unitree_converse/build/bob_llm': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/unitree/unitree_converse/build/bob_llm
+[0.195s] -- Install configuration: ""
+[0.195s] -- Execute custom install script
+[0.196s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/node_params.yaml
+[0.196s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/qdrant_tools.py
+[0.196s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/ros_cli_tools.py
+[0.196s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/skill_tools.py
+[0.197s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/skills/memory/SKILL.md
+[0.198s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/skills/memory/data/memory.json
+[0.198s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/skills/memory/scripts/save.py
+[0.198s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/config/skills/memory/scripts/search.py
+[0.199s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/environment/pythonpath.sh
+[0.199s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/environment/pythonpath.dsv
+[0.200s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm/__init__.py
+[0.200s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm/backend_clients.py
+[0.200s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm/chat_node.py
+[0.200s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm/llm_node.py
+[0.201s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm/setup.cfg
+[0.201s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm/tool_utils.py
+[0.201s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/bob_llm/llm_node.py
+[0.201s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/lib/bob_llm/chat_node.py
+[0.202s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/ament_index/resource_index/package_run_dependencies/bob_llm
+[0.202s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/ament_index/resource_index/parent_prefix_path/bob_llm
+[0.202s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/environment/ament_prefix_path.sh
+[0.202s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/environment/ament_prefix_path.dsv
+[0.203s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/environment/path.sh
+[0.203s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/environment/path.dsv
+[0.203s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/local_setup.bash
+[0.204s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/local_setup.sh
+[0.204s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/local_setup.zsh
+[0.204s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/local_setup.dsv
+[0.204s] -- Symlinking: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/package.dsv
+[0.223s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/ament_index/resource_index/packages/bob_llm
+[0.224s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/cmake/bob_llmConfig.cmake
+[0.224s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/cmake/bob_llmConfig-version.cmake
+[0.224s] -- Up-to-date symlink: /home/unitree/unitree_converse/install/bob_llm/share/bob_llm/package.xml
+[0.273s] Listing '/home/unitree/unitree_converse/install/bob_llm/lib/python3.8/site-packages/bob_llm'...
+[0.287s] Invoked command in '/home/unitree/unitree_converse/build/bob_llm' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/unitree/unitree_converse/build/bob_llm
