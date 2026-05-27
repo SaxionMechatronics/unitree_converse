@@ -103,7 +103,7 @@ The setup script will ask whether you are setting up on the **Unitree G1 Jetson*
 |-----------|---------|
 | Robot | Unitree G1 Edu (29-DOF + Dex3-L hands) |
 | Onboard compute | NVIDIA Jetson Orin NX 16GB (`192.168.123.164`) |
-| Dev machine | `luciferHimself` — Ubuntu 22.04, RTX Pro 5000 Blackwell |
+| Dev machine | Ubuntu 22.04, RTX Pro 5000 Blackwell |
 | Microphone | G1 built-in mic via RockChip UDP multicast `239.168.123.161:5555` |
 | Speaker | G1 built-in speaker via Unitree AudioHub API |
 | Remote | Unitree wireless controller (`/wirelesscontroller`) |
