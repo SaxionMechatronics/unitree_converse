@@ -12,6 +12,27 @@ A complete voice conversation pipeline for the **Unitree G1 humanoid robot** ("A
 
 ---
 
+## Quick Start
+
+```bash
+git clone --recurse-submodules https://github.com/AkhileshSingh01/unitree_converse.git
+cd unitree_converse
+./setup.sh
+```
+
+The setup script will ask whether you are setting up on the **Unitree G1 Jetson** or a **dev machine**, then handle everything automatically:
+
+- Downloads Piper voice model (`en_US-lessac-medium`)
+- Downloads faster-whisper base model
+- Installs Piper binary (Jetson) or piper-tts Python package (dev machine)
+- Installs and starts Ollama, pulls LLaMA 3.2 3B
+- Builds the ROS2 workspace
+- Installs and enables systemd services (Jetson only)
+
+> **Note:** If `setup.sh` fails at any step, see the [Manual Installation](#manual-installation) section below for step-by-step instructions.
+
+---
+
 ## Architecture
 
 ```
@@ -109,6 +130,10 @@ A complete voice conversation pipeline for the **Unitree G1 humanoid robot** ("A
 
 ```
 unitree_converse/
+├── setup.sh                        # Interactive setup script
+├── unitree_converse.service        # Systemd service file
+├── ollama.service                  # Ollama systemd service reference
+├── README.md
 └── src/
     ├── g1_voice/
     │   ├── g1_voice/
@@ -123,7 +148,7 @@ unitree_converse/
     │   └── config/
     │       ├── voice_params.yaml       # Dev machine params
     │       └── voice_params_real.yaml  # Jetson robot params
-    └── bob_llm/                        # LLM ROS2 node (upstream)
+    └── bob_llm/                        # LLM ROS2 node (submodule, Foxy-patched fork)
 ```
 
 ---
@@ -136,7 +161,6 @@ The G1's audio is **not** handled by the Jetson's ALSA/PulseAudio. It is managed
 The RockChip streams raw **16-bit mono 16kHz PCM** via UDP multicast. The `stt_node` joins the multicast group to receive mic audio.
 
 ```python
-# stt_node.py — UDP multicast mic
 sock.bind(('', 5555))
 mreq = struct.pack('4s4s',
     socket.inet_aton('239.168.123.161'),
@@ -145,7 +169,7 @@ sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 ```
 
 ### Speaker
-Audio output uses the Unitree `AudioClient::PlayStream()` API which requires **16kHz mono PCM**. A custom C++ binary `g1_piper_tts` was written to handle this:
+The G1 speaker is controlled via the Unitree `AudioClient::PlayStream()` API which requires **16kHz mono PCM**. A custom C++ binary `g1_piper_tts` handles this:
 
 ```
 tts_node → subprocess: g1_piper_tts eth0 < text
@@ -171,24 +195,20 @@ Binary: `~/unitree_sdk2_latest/build/bin/g1_piper_tts`
 | `/g1/voice/continuous_stop` | `std_msgs/Bool` | Disable continuous mode |
 | `/g1/stt/transcript` | `std_msgs/String` | Raw transcribed speech |
 | `/g1/stt/status` | `std_msgs/String` | recording/transcribing/idle |
-| `/g1/robot_state` | `std_msgs/String` | Live robot state (JSON) |
+| `/g1/robot_state` | `std_msgs/String` | Live robot state |
 | `llm_prompt` | `std_msgs/String` | Enriched prompt (state + transcript) |
 | `llm_response` | `std_msgs/String` | LLM reply |
 | `/g1/tts/status` | `std_msgs/String` | speaking/idle |
 | `/g1/button/status` | `std_msgs/String` | Button node status |
-| `/lf/bmsstate` | `unitree_hg/msg/BmsState` | Battery state |
-| `/odommodestate` | `unitree_go/msg/SportModeState` | IMU + motion mode |
 
 ---
 
 ## Button Mapping
 
-| Button | Action |
-|--------|--------|
-| **Hold F1** (`keys=64`) | Push-to-talk: starts recording while held, stops and transcribes on release |
-| **F3** (`keys=128`) | Toggle continuous conversation mode on/off |
-
-Implemented in `button_trigger_node.py` with 0.3s debounce on F3.
+| Button | Keys Value | Action |
+|--------|-----------|--------|
+| **Hold F1** | 64 | Push-to-talk: records while held, transcribes on release |
+| **F3** | 128 | Toggle continuous conversation mode on/off |
 
 ---
 
@@ -203,121 +223,53 @@ Press F3 again to stop.
 
 ---
 
-## Robot State Awareness
+## Systemd Services
 
-`robot_state_node.py` collects live data and injects it into every LLM prompt:
+The pipeline uses two systemd services that auto-start at boot:
 
 ```
-[ROBOT STATE]
-Battery: 53% (health 99%, 2.0A discharging, temp 37°C, 7 cycles)
-Orientation: roll=-0.1° pitch=2.3° yaw=-84.5°
-Motion mode: idle
-Network: eth 192.168.123.164, wifi 10.0.1.147
-Uptime: 2h 15m
-Active ROS2 nodes: 8
-LLM: Ollama LLaMA 3.2 3B (local)
-STT: faster-whisper base
-TTS: Piper en_US-lessac-medium (Aletta voice)
-[/ROBOT STATE]
+ollama.service              ← runs LLaMA 3.2 3B on Jetson GPU
+unitree_converse.service    ← voice pipeline (depends on ollama)
 ```
-
----
-
-## Systemd Service
-
-The pipeline auto-starts at boot via systemd:
 
 ```bash
-# Status
+# Check status
 sudo systemctl status unitree_converse.service
+sudo systemctl status ollama.service
 
-# Logs
+# Follow live logs
 journalctl -u unitree_converse.service -f
 
-# Restart
+# Restart after config changes
 sudo systemctl restart unitree_converse.service
 
-# Stop
+# Stop before manual launch
 sudo systemctl stop unitree_converse.service
 ```
 
-Service file: `/etc/systemd/system/unitree_converse.service`
-
-**Important:** Never run `ros2 launch` manually while the service is running — they will conflict and cause `bad_alloc` crashes from DDS port collisions.
-
-```bash
-# Always stop the service first if launching manually
-sudo systemctl stop unitree_converse.service
-sleep 2
-sudo rm -f /dev/shm/fastrtps_*
-ros2 launch g1_voice voice_real.launch.py
-```
-
----
-
-## Installation
-
-### On Jetson (Ubuntu 20.04, ROS2 Foxy)
-
-```bash
-# Python deps
-pip3 install faster-whisper sounddevice soundfile tqdm filelock openwakeword
-
-# Sox for audio resampling
-sudo apt-get install -y sox
-
-# Piper standalone binary (Python package unavailable for aarch64/Python 3.8)
-wget https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_linux_aarch64.tar.gz
-tar -xzf piper_linux_aarch64.tar.gz
-sudo cp piper/piper /usr/local/bin/piper
-
-# Piper voice model
-mkdir -p ~/.local/share/piper && cd ~/.local/share/piper
-wget https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx
-wget https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json
-
-# Ollama + LLaMA 3.2
-curl -fsSL https://ollama.com/install.sh | sh
-ollama pull llama3.2
-
-# Build g1_piper_tts C++ binary
-cd ~/unitree_sdk2_latest/build
-cmake .. && make g1_piper_tts -j$(nproc)
-
-# Clone unitree_ros2 messages
-git clone https://github.com/unitreerobotics/unitree_ros2.git
-cd unitree_ros2/cyclonedds_ws
-source /opt/ros/foxy/setup.bash
-colcon build --packages-select unitree_go unitree_api unitree_hg
-source install/setup.bash
-
-# Build workspace
-cd ~/unitree_converse
-colcon build --symlink-install
-source install/setup.bash
-
-# Install systemd service
-sudo cp unitree_converse.service /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable unitree_converse.service
-sudo systemctl start unitree_converse.service
-```
+> **Critical:** Never run `ros2 launch` manually while the service is running. Both instances compete for CycloneDDS shared memory and cause `bad_alloc` crashes. Always stop the service first:
+> ```bash
+> sudo systemctl stop unitree_converse.service
+> sleep 2
+> sudo rm -f /dev/shm/fastrtps_*
+> ros2 launch g1_voice voice_real.launch.py
+> ```
 
 ---
 
 ## Testing
 
 ```bash
-# Manual transcript (bypasses mic, tests LLM + TTS)
+# Manual transcript — bypasses mic, tests LLM + TTS
 ros2 topic pub --once /g1/stt/transcript std_msgs/msg/String "data: 'What is your battery level?'"
 
-# Manual trigger (tests mic + full pipeline)
+# Manual trigger — tests full pipeline including mic
 ros2 topic pub --once /g1/voice/trigger std_msgs/msg/Bool "data: true"
 
 # Enable continuous mode
 ros2 topic pub --once /g1/voice/continuous_start std_msgs/msg/Bool "data: true"
 
-# Check robot state
+# Check live robot state
 ros2 topic echo /g1/robot_state
 
 # Test TTS binary directly
@@ -344,12 +296,12 @@ echo "Hello, I am Aletta." | ~/unitree_sdk2_latest/build/bin/g1_piper_tts eth0
     silence_threshold: 0.008
     silence_duration: 2.0
     recording_duration: 8.0
-    continuous_mode: false   # controlled at runtime by F3
+    continuous_mode: false
 
 /tts_node:
   ros__parameters:
     tts_mode: "binary"
-    continuous_mode: false   # controlled at runtime by F3
+    continuous_mode: false
 ```
 
 ---
@@ -362,29 +314,108 @@ echo "Hello, I am Aletta." | ~/unitree_sdk2_latest/build/bin/g1_piper_tts eth0
 | `tts_mode` | `python` (piper-tts lib) | `binary` (g1_piper_tts) |
 | ROS2 distro | Humble | Foxy |
 | Network interface | `lo` or `wlp132s0f0` | `eth0` |
-| DDS interface | cyclonedds.xml → `wlan0` (dev) | cyclonedds.xml → `eth0` |
+| CycloneDDS interface | `wlan0` (dev) | `eth0` (robot) |
+
+---
+
+## Manual Installation
+
+> Use these steps if `setup.sh` fails at any point.
+
+### Jetson Orin NX (Ubuntu 20.04, ROS2 Foxy)
+
+```bash
+# Python deps
+pip3 install faster-whisper sounddevice soundfile tqdm filelock openwakeword
+sudo apt-get install -y sox portaudio19-dev
+
+# Piper binary
+wget https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_linux_aarch64.tar.gz
+tar -xzf piper_linux_aarch64.tar.gz
+sudo cp piper/piper /usr/local/bin/piper
+
+# Piper voice model
+mkdir -p ~/.local/share/piper && cd ~/.local/share/piper
+wget https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx
+wget https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json
+
+# faster-whisper base model
+python3 -c "from faster_whisper import WhisperModel; WhisperModel('base', device='cpu', compute_type='int8')"
+
+# Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull llama3.2
+
+# Build g1_piper_tts C++ binary
+git clone https://github.com/unitreerobotics/unitree_sdk2.git unitree_sdk2_latest
+# Add g1_piper_tts.cpp to example/g1/audio/ and update CMakeLists.txt
+cd unitree_sdk2_latest/build && cmake .. && make g1_piper_tts -j$(nproc)
+
+# unitree_ros2 messages
+git clone https://github.com/unitreerobotics/unitree_ros2.git
+cd unitree_ros2/cyclonedds_ws
+source /opt/ros/foxy/setup.bash
+colcon build --packages-select unitree_go unitree_api unitree_hg
+
+# Build workspace
+cd ~/unitree_converse
+source /opt/ros/foxy/setup.bash
+source ~/cyclonedds_ws/install/setup.bash
+source ~/unitree_ros2/cyclonedds_ws/install/setup.bash
+colcon build --symlink-install
+source install/setup.bash
+
+# Install services
+sudo cp unitree_converse.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable ollama.service unitree_converse.service
+sudo systemctl start ollama.service unitree_converse.service
+```
+
+### Dev Machine (Ubuntu 22.04, ROS2 Humble)
+
+```bash
+pip install faster-whisper sounddevice soundfile tqdm filelock openwakeword piper-tts
+sudo apt-get install -y sox portaudio19-dev
+
+mkdir -p ~/.local/share/piper && cd ~/.local/share/piper
+wget https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx
+wget https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json
+
+python3 -c "from faster_whisper import WhisperModel; WhisperModel('base', device='cpu', compute_type='int8')"
+
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull llama3.2
+
+source /opt/ros/humble/setup.bash
+cd ~/UNITREE/unitree_converse
+colcon build --symlink-install
+source install/setup.bash
+ros2 launch g1_voice voice_sim.launch.py
+```
 
 ---
 
 ## Known Issues
 
-- **Never run manual launch while service is running** — causes DDS `bad_alloc` crashes. Always stop the service first.
-- **cyclonedds.xml must use `eth0`** — if set to `wlan0` and WiFi isn't up, DDS fails to allocate shared memory at startup.
-- **openWakeWord uses ~10GB RAM** — disabled in production (`use_wake_word: false`). Button trigger is used instead.
-- **Piper Python package unavailable on aarch64/Python 3.8** — use the standalone binary + sox pipeline.
-- **Jetson clock skew** — system clock is wrong, causes harmless `make` warnings.
-- **Saxion WiFi AP isolation** — prevents SSH over WiFi. Use ethernet or a portable router.
+| Issue | Fix |
+|-------|-----|
+| `bad_alloc` on launch | Service already running. Stop it, clear `/dev/shm/fastrtps_*`, relaunch. Or reboot. |
+| `cyclonedds.xml` must use `eth0` | If set to `wlan0` and WiFi not up at boot, DDS fails. Change `NetworkInterface` to `eth0`. |
+| openWakeWord uses ~10GB RAM | Disable with `use_wake_word: false`. Use F1 button instead. |
+| Battery showing unknown | `BmsState` uses `unitree_hg` (not `unitree_go`) and needs QoS `RELIABLE`. |
+| Piper Python unavailable on aarch64 | Use standalone binary + sox pipeline (`g1_piper_tts`). |
+| Saxion WiFi AP isolation | Cannot SSH over WiFi. Use ethernet (`192.168.123.164`) or portable router. |
 
 ---
 
 ## Future Work
 
-- [ ] Custom "Aletta" wake word model with openWakeWord
-- [ ] Map additional remote buttons (SELECT, L1/R1) to actions
-- [ ] Add motion commands via voice ("walk forward", "sit down")
-- [ ] Add `robot_state_node` pose tracking (feet contact, CoM position)
-- [ ] Upgrade Jetson to ROS2 Humble
-- [ ] Persistent conversation history across restarts
+- Custom "Aletta" wake word model
+- Voice-controlled motion commands
+- Persistent conversation history across reboots
+- Upgrade Jetson to ROS2 Humble
+- Map additional remote buttons to actions
 
 ---
 
