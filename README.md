@@ -15,7 +15,7 @@ A complete voice conversation pipeline for the **Unitree G1 humanoid robot** ("A
 ## Quick Start
 
 ```bash
-git clone --recurse-submodules https://github.com/AkhileshSingh01/unitree_converse.git
+git clone --recurse-submodules https://github.com/SaxionMechatronics/unitree_converse.git
 cd unitree_converse
 ./setup.sh
 ```
