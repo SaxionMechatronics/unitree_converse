@@ -1,1 +1,0 @@
-/home/unitree/unitree_converse/src/g1_voice/launch/voice_real.launch.py

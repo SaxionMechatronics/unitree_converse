@@ -1,3 +1,0 @@
-source;share/bob_llm/environment/ament_prefix_path.sh
-source;share/bob_llm/environment/path.sh
-source;share/bob_llm/environment/pythonpath.sh
